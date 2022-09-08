@@ -9,7 +9,8 @@ SqlDriver: the sqldriver is sqlitecipher, i set the original pwd for connecting 
 About the File:  the sqlite folder is source code.
                  and build folder is deployed click run-able app.
 
-Database Structure: 
+Database Structure: addressbook/sqlite3 with two tables.
+
                     database---addressbook.sqlite3|->table---login(for login)
                                                   |->table---contact(storing contact)
                                                          
