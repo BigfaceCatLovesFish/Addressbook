@@ -19,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     display_dateAndtime();
-    this->setWindowFlags(Qt::Dialog);
 
     connect(ui->pushButton_1, SIGNAL(clicked()), this, SLOT(btn1_clicked()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(btn2_clicked()));
@@ -53,49 +52,51 @@ void MainWindow::display_dateAndtime()
     ui->lcdNumber->display(time);
 }
 
-int MainWindow::connectsqlite(QString &UserName, QString &Password)
+int MainWindow::connectsqlite()
 {
-    name = UserName;
+    QString name = ui->lineEdit->text();
+    QString password = ui->lineEdit_2->text();
+    QString pwd;
 
-    if(name == "")
+
+    if(name == "" || password == "")
     {
         return 0;
-    }
-
-    QString pwd;
-    QSqlDatabase a1;
-    if(QSqlDatabase::contains("qt_sql_default_connection"))
-    {
-        a1 = QSqlDatabase::database("qt_sql_default_connection");
     }
     else
     {
-        a1 = QSqlDatabase::addDatabase("SQLITECIPHER");
+        QSqlDatabase a1;
+        if(QSqlDatabase::contains("qt_sql_default_connection"))
+        {
+            a1 = QSqlDatabase::database("qt_sql_default_connection");
+        }
+        else
+        {
+            a1 = QSqlDatabase::addDatabase("SQLITECIPHER");
 
+        }
+
+        a1.setDatabaseName("addressbook.sqlite3");
+        a1.setPassword("sa");
+        a1.open();
+
+        QSqlQuery b1;
+        b1.exec(QString("Select * From login Where name = '%1'").arg(name));
+
+        while(b1.next())
+        {
+            pwd = b1.value(1).toString();
+        }
+
+        a1.close();
     }
 
-    a1.setDatabaseName("Login.sqlite3");
-    a1.setPassword("sa");
-    a1.open();
-
-    QSqlQuery b1(a1);
-    b1.exec(QString("Select UserName, Password "
-                        "From Login "
-                        "Where UserName = '%1' ").arg(name));
-
-    while(b1.next())
+    if(pwd == password)
     {
-        pwd = b1.value(1).toString();
+        return 1;
     }
-
-    a1.close();
-
-    if(!(pwd == Password))
-    {
+    else
         return 0;
-    }
-
-    return 1;
 }
 
 void MainWindow::btn1_clicked()
@@ -106,10 +107,8 @@ void MainWindow::btn1_clicked()
 
 void MainWindow::btn2_clicked()
 {
-    QString UserName = ui->lineEdit->text();
-    QString Password = ui->lineEdit_2->text();
 
-    if(connectsqlite(UserName, Password))
+    if(connectsqlite())
     {
         Addressbook *w2 = new Addressbook;
         w2->show();

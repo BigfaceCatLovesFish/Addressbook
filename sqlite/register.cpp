@@ -14,7 +14,7 @@ Register::Register(QWidget *parent) :
 {
     ui->setupUi(this);
     display_dateAndtime();
-    connect(ui->pushButton_1, SIGNAL(clicked()), this, SLOT(btn1_clicked()));
+    connect(ui->pushButton_1, SIGNAL(pressed()), this, SLOT(btn1_clicked()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(btn2_clicked()));
     ui->pushButton_1->setShortcut(Qt::Key_Return);
 
@@ -34,70 +34,66 @@ void Register::display_dateAndtime()
     MainWindow e1;
     QString date,time;
     e1.get_dateAndtime(date, time);
-    ui->label_4->setText(date);
+    ui->label_4->setText(QString("Date: %1").arg(date));
     ui->lcdNumber->display(QString("Date: %1").arg(time));
 
 }
 
-void Register::ConnectSqlite(QString &UserName, QString &Password)
+void Register::RegisterSqlite()
 {
-    QString name = UserName;
-    QString pwd = Password;
+    QString name = ui->lineEdit->text();
+    QString pwd = ui->lineEdit_2->text();
 
-    QSqlDatabase a1;
-    if(QSqlDatabase::contains("qt_sql_default_connection"))
+    if(name == "" || pwd == "")
     {
-        a1 = QSqlDatabase::database("qt_sql_default_connection");
+        ui->label_3->setText("name or password can't be null!");
     }
     else
     {
-        a1 = QSqlDatabase::addDatabase("SQLITECIPHER");
+        QSqlDatabase a1;
 
+        if(QSqlDatabase::contains("qt_sql_default_connection"))
+        {
+            a1 = QSqlDatabase::database("qt_sql_default_connection");
+        }
+        else
+        {
+            a1 = QSqlDatabase::addDatabase("SQLITECIPHER");
+
+        }
+        a1.setDatabaseName("addressbook.sqlite3");
+        a1.setPassword("sa");
+        a1.open();
+
+        QSqlQuery b1,b2;
+        b1.exec("Select * From login");
+        b2.exec(QString("Select * From login Where name = '%1'; ").arg(name));
+
+        if(!b1.first())
+        {
+
+            b1.exec("Create Table login(name string primary key unique not null, password string not null);");
+            b1.exec(QString("Insert Into login Values('%1', '%2')").arg(name, pwd));
+            ui->label_3->setText("successfully11 registered!");
+        }
+        else if(b2.first())
+        {
+            ui->label_3->setText("name exists!!");
+        }
+        else
+        {
+            b1.exec(QString("Insert Into login Values('%1', '%2')").arg(name, pwd));
+            ui->label_3->setText("successfully registered!");
+        }
+
+        a1.close();
     }
-    a1.setDatabaseName("Login.sqlite3");
-    a1.setPassword("sa");
-    a1.open();
-
-    QSqlQuery b1(a1);
-
-    if(!b1.exec("Select * From Login"))
-    {
-        b1.exec("create table Login(userName text primary key, Password text)");
-    }
-
-    if(b1.exec(QString("Select * "
-                       "From Login "
-                       "Where userName = '%1'").arg(UserName)))
-    {
-        ui->label_3->setText("userName exists!!");
-        ui->label_3->setStyleSheet("background: green");
-
-    }
-    else
-    {
-        b1.exec(QString("Insert Into Login Values('%1', '%2')").arg(name, pwd));
-        ui->label_3->setText("successfully!");
-    }
-
-
-    a1.close();
 
 }
 
 void Register::btn1_clicked()
 {
-
-    QString UserName = ui->lineEdit->text();
-    QString Password = ui->lineEdit_2->text();
-
-    if(UserName == "" || Password == "")
-    {
-        ui->label_3->setText("UserName or Password can't be null!");
-        ui->label_3->setStyleSheet("background: red");
-    }
-
-    else ConnectSqlite(UserName, Password);
-
+    RegisterSqlite();
 }
 
 void Register::btn2_clicked()

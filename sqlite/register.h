@@ -19,7 +19,7 @@ private slots:
     void btn1_clicked();
     void btn2_clicked();
     void display_dateAndtime();
-    void ConnectSqlite(QString &UserName, QString &Password);
+    void RegisterSqlite();
 
 private:
     Ui::Register *ui;

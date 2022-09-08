@@ -14,11 +14,13 @@ class AddNew : public QMainWindow
 public:
     explicit AddNew(QWidget *parent = nullptr);
     ~AddNew();
+    void AddSqlite();
+    void modifySqlite();
 
 private slots:
-    void on_pushButton_2_clicked();
-    void on_pushButton_clicked();
-    void AddSqlite(QString &s1);
+    void btn1_clicked();
+    void btn2_clicked();
+    void btn3_clicked();
     void display_dateAndtime();
 
 private:

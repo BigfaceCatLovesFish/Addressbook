@@ -3,14 +3,14 @@
  <class>Register</class>
  <widget class="QMainWindow" name="Register">
   <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
-    <height>432</height>
+    <width>355</width>
+    <height>382</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,14 +21,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>336</width>
-    <height>432</height>
+    <width>355</width>
+    <height>382</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>336</width>
-    <height>432</height>
+    <width>355</width>
+    <height>382</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -46,8 +46,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>130</y>
+      <x>60</x>
+      <y>100</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -59,9 +59,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>190</y>
-      <width>81</width>
+      <x>60</x>
+      <y>180</y>
+      <width>91</width>
       <height>20</height>
      </rect>
     </property>
@@ -72,9 +72,9 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>130</y>
-      <width>161</width>
+      <x>160</x>
+      <y>100</y>
+      <width>113</width>
       <height>25</height>
      </rect>
     </property>
@@ -85,9 +85,9 @@
    <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>190</y>
-      <width>161</width>
+      <x>160</x>
+      <y>180</y>
+      <width>113</width>
       <height>25</height>
      </rect>
     </property>
@@ -101,8 +101,8 @@
    <widget class="QPushButton" name="pushButton_1">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>270</y>
+      <x>190</x>
+      <y>240</y>
       <width>71</width>
       <height>29</height>
      </rect>
@@ -117,8 +117,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>270</y>
+      <x>80</x>
+      <y>240</y>
       <width>41</width>
       <height>29</height>
      </rect>
@@ -133,9 +133,9 @@
    <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>30</y>
-      <width>111</width>
+      <x>130</x>
+      <y>20</y>
+      <width>101</width>
       <height>31</height>
      </rect>
     </property>
@@ -149,9 +149,9 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>320</y>
-      <width>231</width>
+      <x>60</x>
+      <y>330</y>
+      <width>211</width>
       <height>31</height>
      </rect>
     </property>
@@ -165,11 +165,20 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>390</y>
-      <width>231</width>
-      <height>21</height>
+      <x>60</x>
+      <y>330</y>
+      <width>211</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+     </font>
     </property>
     <property name="text">
      <string/>

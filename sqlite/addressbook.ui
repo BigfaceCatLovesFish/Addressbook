@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
+    <width>440</width>
     <height>652</height>
    </rect>
   </property>
@@ -18,21 +18,21 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>439</width>
+    <width>440</width>
     <height>652</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>439</width>
+    <width>440</width>
     <height>652</height>
    </size>
   </property>
   <property name="font">
    <font>
-    <family>楷体</family>
+    <family>Microsoft YaHei UI</family>
     <pointsize>10</pointsize>
-    <bold>true</bold>
+    <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
@@ -50,6 +50,15 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(198, 184, 255);</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>24</width>
+    <height>21</height>
+   </size>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="pushButton">
@@ -89,7 +98,7 @@
      <rect>
       <x>0</x>
       <y>80</y>
-      <width>441</width>
+      <width>440</width>
       <height>451</height>
      </rect>
     </property>
@@ -101,18 +110,29 @@
     </property>
     <property name="minimumSize">
      <size>
-      <width>441</width>
+      <width>440</width>
       <height>451</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>441</width>
+      <width>440</width>
       <height>451</height>
      </size>
     </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: rgb(255, 255, 255);
+
+</string>
+    </property>
+    <property name="autoScrollMargin">
+     <number>14</number>
+    </property>
+    <property name="sortingEnabled">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
@@ -177,6 +197,70 @@
     </property>
     <property name="text">
      <string>Back</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <italic>false</italic>
+      <bold>true</bold>
+      <underline>false</underline>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+selection-color: rgb(0, 0, 0);
+selection-background-color: rgb(255, 255, 255);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>time</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>alphabet</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>415</x>
+      <y>5</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../../Pictures/a2.jpg</normaloff>
+      <normalon>../../../Pictures/a1.jpg</normalon>
+      <disabledoff>../../../Pictures/a2.jpg</disabledoff>
+      <disabledon>../../../Pictures/a1.jpg</disabledon>
+      <activeoff>../../../Pictures/a2.jpg</activeoff>
+      <activeon>../../../Pictures/a1.jpg</activeon>
+      <selectedoff>../../../Pictures/a2.jpg</selectedoff>
+      <selectedon>../../../Pictures/a1.jpg</selectedon>../../../Pictures/a2.jpg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
     </property>
    </widget>
   </widget>

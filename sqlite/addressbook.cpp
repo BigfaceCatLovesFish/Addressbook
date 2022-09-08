@@ -6,9 +6,15 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QTimer>
+#include <QDir>
+#include <QFileInfo>
+#include <QMenu>
+#include <QMessageBox>
 
 extern QString name;
 extern QTimer *timer;
+QString s1;
+
 
 Addressbook::Addressbook(QWidget *parent) :
     QMainWindow(parent),
@@ -17,15 +23,15 @@ Addressbook::Addressbook(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle(QString("Hello! Welcome to %1's addressbook").arg(name));
     display_dateAndtime();
-    ListSqlite();
+    ListSqlite(1);
 
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(btn1_clicked()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(btn2_clicked()));
     connect(ui->pushButton_3, SIGNAL(clicked()), this, SLOT(btn3_clicked()));
     connect(ui->pushButton_4, SIGNAL(clicked()), this, SLOT(btn4_clicked()));
+    connect(ui->pushButton_5, SIGNAL(released()), this, SLOT(btn5_clicked()));
 
     connect(timer,SIGNAL(timeout()),this,SLOT(display_dateAndtime()));
-    connect(timer,SIGNAL(timeout()),this,SLOT(ListSqlite()));
     timer->start(1000);
 
 }
@@ -44,45 +50,11 @@ void Addressbook::display_dateAndtime()
     ui->lcdNumber->display(time);
 }
 
-void Addressbook::AddSqlite()
-{
-    QString name;
-    QString pwd;
-    QSqlDatabase a1;
-    if(QSqlDatabase::contains("qt_sql_default_connection"))
-    {
-        a1 = QSqlDatabase::database("qt_sql_default_connection");
-    }
-    else
-    {
-        a1 = QSqlDatabase::addDatabase("SQLITECIPHER");
-
-    }
-    a1.setDatabaseName("Login.sqlite3");
-    a1.setPassword("sa");
-
-    a1.open();
-
-    QSqlQuery b1(a1);
-
-    b1.exec(QString("Select UserName, Password "
-                        "From Login "
-                        "Where UserName = '%1' ").arg(name));
-
-    while(b1.next())
-    {
-        pwd = b1.value(1).toString();
-
-    }
-
-    a1.close();
-
-}
-
-void Addressbook::ListSqlite()
+void Addressbook::ListSqlite(bool q1)
 {
     ui->listWidget->clear();
     QSqlDatabase a1;
+
     if(QSqlDatabase::contains("qt_sql_default_connection"))
     {
         a1 = QSqlDatabase::database("qt_sql_default_connection");
@@ -92,12 +64,20 @@ void Addressbook::ListSqlite()
         a1 = QSqlDatabase::addDatabase("SQLITECIPHER");
 
     }
-    a1.setDatabaseName("Login.sqlite3");
+    a1.setDatabaseName("addressbook.sqlite3");
     a1.setPassword("sa");
     a1.open();
 
     QSqlQuery b1(a1);
-    b1.exec("Select * From Contact");
+    if(q1)
+    {
+        b1.exec("Select * From contact");
+    }
+    else
+    {
+        b1.exec("Select * From contact order by name");
+    }
+
 
     while(b1.next())
     {
@@ -114,11 +94,24 @@ void Addressbook::ListSqlite()
         QListWidgetItem *add_item = new QListWidgetItem(ui->listWidget);
         add_item->setSizeHint(QSize(400,100));
         add_item->setFont(QFont("Source Code Pro",14));
-        add_item->setIcon(QIcon("a.png"));
+
+        QFileInfo t1(QString("./pic/%1.png").arg(name));
+        if(t1.isFile())
+        {
+            add_item->setIcon(QIcon(QString("./pic/%1.png").arg(name)));
+        }
+
+        t1.setFile(QString("./pic/%1.jpg").arg(name));
+        if(t1.isFile())
+        {
+            add_item->setIcon(QIcon(QString("./pic/%1.jpg").arg(name)));
+        }
+
         ui->listWidget->setIconSize(QSize(100,90));
         add_item->setText(a);
         ui->listWidget->addItem(add_item);
     }
+
 
     a1.close();
 
@@ -152,3 +145,109 @@ void Addressbook::btn4_clicked()
     w->show();
     this->close();
 }
+
+void Addressbook::btn5_clicked()
+{
+
+    this->setWindowFlags( Qt::WindowStaysOnTopHint);
+    this->show();
+
+}
+
+void Addressbook::on_comboBox_textActivated(const QString &arg1)
+{
+    QFileInfo f1("./pic/");
+    if(!f1.isDir())
+    {
+        QDir *path = new QDir;
+        path->mkpath("./pic/");
+    }
+
+    if(arg1 == "time")
+        ListSqlite(1);
+    else ListSqlite(0);
+}
+
+
+void Addressbook::on_listWidget_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu  *m1 = new QMenu(ui->listWidget);
+
+    m1->setStyleSheet("QMenu{background-color: rgb(89,87,87); border: 5px solid rgb(255,255,255) ;}\
+                       QMenu::item{color: rgb(0,0,0);border: 1px solid rgb(0,0,0);padding: 5px;background-color: #ffffff;}\
+                       QMenu:item:hover,QMenu:item:selected{background-color: rgb(198,184,255);}");
+
+    QFont f1;
+    f1.setPointSize(10);
+    m1->setFont(f1);
+
+    QAction  *d1 = new QAction(tr("Delete   "), this);
+    QAction  *mod = new QAction(tr("Modify  "), this);
+
+    connect(d1, SIGNAL(triggered()), this, SLOT(deleteSqlite()));
+    connect(mod, SIGNAL(triggered()), this, SLOT(modifySqlite()));
+
+
+    m1->addAction(d1);
+    m1->addAction(mod);
+    m1->popup(ui->listWidget->mapToGlobal(pos));
+
+}
+
+void Addressbook::deleteSqlite()
+{
+    QList<QListWidgetItem*> items = ui->listWidget->selectedItems();
+
+    foreach(QListWidgetItem* var, items)
+    {
+        s1 = var->text();
+        QStringList s2 = s1.split("\n");
+        s1 = s2.first();
+        s2 = s1.split(":");
+        s1 = s2.last().simplified();
+    }
+
+
+    QSqlDatabase a1;
+    if(QSqlDatabase::contains("qt_sql_default_connection"))
+    {
+        a1 = QSqlDatabase::database("qt_sql_default_connection");
+    }
+    else
+    {
+        a1 = QSqlDatabase::addDatabase("SQLITECIPHER");
+
+    }
+    a1.setDatabaseName("addressbook.sqlite3");
+    a1.setPassword("sa");
+    a1.open();
+
+    QSqlQuery b1;
+    b1.exec(QString("Delete From contact where name = '%1' ").arg(s1));
+
+
+    a1.close();
+
+
+}
+
+void Addressbook::modifySqlite()
+{
+    QList<QListWidgetItem*> items = ui->listWidget->selectedItems();
+
+    foreach(QListWidgetItem* var, items)
+    {
+        s1 = var->text();
+        QStringList s2 = s1.split("\n");
+        s1 = s2.first();
+        s2 = s1.split(":");
+        s1 = s2.last().simplified();
+    }
+
+    AddNew *w = new AddNew;
+    w->modifySqlite();
+    w->show();
+
+
+}
+

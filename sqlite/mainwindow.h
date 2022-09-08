@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    int connectsqlite(QString &UserName, QString &Password);
+    int connectsqlite();
     void get_dateAndtime(QString &date, QString &time);
 
 
