@@ -1,8 +1,10 @@
 Hello there! it's a qt6 project about a simple addressbook.
+
 ide: qt6;
+
 os: windows11;
 
-function: local sqlite3 datanase storeing contacts, folder pic stores the related avatar. you can add,modify,delete contact through this application.
+function: local sqlite3 database storeing contacts, folder pic stores the related avatar. you can add,modify,delete contact through this application.
 
 SqlDriver: the sqldriver is sqlitecipher, i set the original pwd for connecting databse as "sa".
 
