@@ -20,9 +20,9 @@ Database Structure: addressbook.sqlite3 with two tables.
                          |        ->password string;
                          | 
                          |---contact->name  
-                                   ->phone
-                                   ->email
-                                   ->address
+                                    ->phone
+                                    ->email
+                                    ->address
 
 main item used in qt is listwidget, first u need rigister. after log in, right clicked the center, u can delete and modify contact.
 top-left u can choose to sort contact by time or alphabet. each new contact added, u need to choose top-left time or alphabet to update the listWidget.
