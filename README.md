@@ -24,7 +24,8 @@ Database Structure: addressbook.sqlite3 with two tables.
                                     ->email
                                     ->address
 
-main item used in qt is listwidget, first u need rigister. 
+main item used in qt is listwidget, first u need rigister.
+
 https://github.com/BigfaceCatLovesFish/Addressbook/blob/main/login.jpg
 
 after log in, right clicked the center, u can delete and modify contact.
