@@ -26,7 +26,7 @@ Database Structure: addressbook.sqlite3 with two tables.
 
 main item used in qt is listwidget, first u need rigister.
 
-https://github.com/BigfaceCatLovesFish/Addressbook/blob/main/login.jpg
+![](https://github.com/BigfaceCatLovesFish/Addressbook/blob/main/login.jpg)
 
 after log in, right clicked the center, u can delete and modify contact.
 top-left u can choose to sort contact by time or alphabet. each new contact added, u need to choose top-left time or alphabet to update the listWidget.
